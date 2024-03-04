@@ -1,0 +1,53 @@
+<div *ngIf="auth.isAuthenticated$ | async">
+  <a class="btn btn-primary" [routerLink]="['/vehicles/new']">Create New</a>
+</div>
+<div class="well">
+  <div class="form-group card">
+    <label for="make">Make</label>
+    <select
+      name=""
+      id="make"
+      [(ngModel)]="query.makeId"
+      (change)="onFilterChange()"
+    >
+      <option value=""></option>
+      <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" (click)="resetFilter()">Reset</button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let c of columns">
+        <div (click)="sortBy(c.key)" *ngIf="c.isSortable">
+          {{ c.title }}
+          <i
+            class="fa"
+            *ngIf="query.sortBy === c.key"
+            [class.fa-sort-asc]="query.isSortAscending"
+            [class.fa-sort-desc]="!query.isSortAscending"
+          ></i>
+        </div>
+        <div *ngIf="!c.isSortable">{{ c.title }}</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let v of queryResult.items">
+      <td>{{ v.id }}</td>
+      <td>{{ v.make.name }}</td>
+      <td>{{ v.model.name }}</td>
+      <td>{{ v.contact.name }}</td>
+      <td>
+        <a [routerLink]="['/vehicles', v.id]">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<app-pagination
+  [total-items]="queryResult.totalItems"
+  [page-size]="query.pageSize"
+  (page-changed)="onPageChange($event)"
+></app-pagination>

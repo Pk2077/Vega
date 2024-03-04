@@ -1,0 +1,140 @@
+<h1>Register a New Vehicle</h1>
+<p>{{ vehicle | json }}</p>
+
+<form #f="ngForm" (ngSubmit)="submit()" novalidate>
+  <div class="form-group">
+    <label for="makeId"></label>
+    <select
+      required
+      [(ngModel)]="vehicle.makeId"
+      name="makeId"
+      id="make"
+      #make="ngModel"
+      class="form-control"
+      (change)="onMakeChange()"
+    >
+      <option value="">Select Make</option>
+      <option *ngFor="let m of makes" [value]="m.id">{{ m.name }}</option>
+    </select>
+
+    <div *ngIf="make.touched && !make.valid" class="alert alert-danger">
+      please specify the make
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="modelId">Model</label>
+    <select
+      required
+      [(ngModel)]="vehicle.modelId"
+      id="modelId"
+      name="modelId"
+      #modelId="ngModel"
+      class="form-control"
+    >
+      <option value="">Select Model</option>
+      <option *ngFor="let model of models" [value]="model.id">
+        {{ model.name }}
+      </option>
+    </select>
+
+    <div *ngIf="modelId.touched && !modelId.valid" class="alert alert-danger">
+      Please specify the model
+    </div>
+  </div>
+
+  <h2>Features</h2>
+  <div class="checkbox" *ngFor="let f of features">
+    <label for="feature{{ f.id }}">
+      <input
+        [checked]="vehicle.features.includes(f.id)"
+        id="feature{{ f.id }}"
+        name="feature{{ f.id }}"
+        type="checkbox"
+        (change)="onFeaturesToggle(f.id, $event)"
+      />
+      {{ f.name }}
+    </label>
+  </div>
+  <br />
+  <p>Is the vehicle registered?</p>
+  <label class="radio-inline" for="Registered">
+    <input
+      id="Registered"
+      [(ngModel)]="vehicle.isRegistered"
+      name="isRegistered"
+      #isRegisteredYes="ngModel"
+      type="radio"
+      [value]="true"
+    />
+    Yes
+  </label>
+  <label for="notRegistered" class="radio-inline">
+    <input
+      id="notRegistered"
+      [(ngModel)]="vehicle.isRegistered"
+      name="isRegistered"
+      #isRegisteredNo="ngModel"
+      type="radio"
+      [value]="false"
+    />
+    No
+  </label>
+
+  <h2>Contact</h2>
+  <div class="form-group">
+    <label for="Name">Contact Name</label>
+    <input
+      required
+      #Name="ngModel"
+      [(ngModel)]="vehicle.contact.name"
+      name="Name"
+      type="text"
+      class="form-control"
+      id="Name"
+    />
+
+    <div *ngIf="Name.touched && !Name.valid" class="alert alert-danger">
+      please specify the make
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="Phone">Contact Phone</label>
+    <input
+      required
+      #Phone="ngModel"
+      [(ngModel)]="vehicle.contact.phone"
+      name="Phone"
+      type="text"
+      class="form-control"
+      id="Phone"
+    />
+
+    <div *ngIf="Phone.touched && !Phone.valid" class="alert alert-danger">
+      please specify the make
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="Email">Contact Email</label>
+    <input
+      #Email="ngModel"
+      [(ngModel)]="vehicle.contact.email"
+      name="Email"
+      type="text"
+      class="form-control"
+      id="Email"
+    />
+  </div>
+  <br />
+  <button [disabled]="!f.valid" class="btn btn-primary" type="submit">
+    Submit
+  </button>
+  <button
+    *ngIf="vehicle.id"
+    class="btn btn-danger"
+    type="button"
+    (click)="delete()"
+  >
+    Delete
+  </button>
+</form>

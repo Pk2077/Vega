@@ -1,0 +1,39 @@
+/* Custom styles for Bootstrap pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+    list-style: none;
+}
+
+.pagination a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    color: #0056b3;
+}
+
+.pagination .active a {
+    font-weight: bold;
+}
+
+.pagination .disabled a {
+    color: #6c757d;
+    pointer-events: none;
+}
+
+.pagination span {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}

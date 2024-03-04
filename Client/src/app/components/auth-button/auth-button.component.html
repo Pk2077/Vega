@@ -1,0 +1,21 @@
+<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+  <a
+    class="nav-link"
+    (click)="
+      auth.logout({ logoutParams: { returnTo: document.location.origin } })
+    "
+    style="cursor: pointer"
+  >
+    Log out
+  </a>
+</ng-container>
+
+<ng-template #loggedOut>
+  <a
+    class="nav-link"
+    (click)="auth.loginWithRedirect()"
+    style="cursor: pointer"
+  >
+    Log in
+  </a>
+</ng-template>
