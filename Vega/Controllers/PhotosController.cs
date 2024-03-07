@@ -43,6 +43,7 @@ namespace Vega.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
         {
             if (file == null)
